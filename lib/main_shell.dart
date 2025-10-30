@@ -1,7 +1,6 @@
-// main_shell.dart
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:yolliday_app/main.dart'; // Assumed to contain AppColors
+import 'package:yolliday_app/main.dart';
 import 'package:yolliday_app/pages/placeholder_page.dart';
 import 'package:yolliday_app/pages/portfolio_page.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -14,10 +13,8 @@ class MainShell extends StatefulWidget {
 }
 
 class _MainShellState extends State<MainShell> {
-  // State for page selection, managed here for app-wide persistence
   int _selectedIndex = 1;
 
-  // The list of pages that will be shown in the body
   static const List<Widget> _pages = <Widget>[
     PlaceholderPage(title: 'Home'),
     PortfolioPage(),
@@ -25,12 +22,35 @@ class _MainShellState extends State<MainShell> {
     PlaceholderPage(title: 'Profile'),
   ];
 
-  // Helper data for the navigation bar items
   final List<Map<String, dynamic>> _navItems = [
-    {'icon': 'home.svg', 'label': 'Home', 'index': 0},
-    {'icon': 'portfolio.svg', 'label': 'Portfolio', 'index': 1},
-    {'icon': 'input.svg', 'label': 'Input', 'index': 2},
-    {'icon': 'profile.svg', 'label': 'Profile', 'index': 3},
+    {
+      'icon': 'home_solid.svg',
+      'label': 'Home',
+      'index': 0,
+      'iconWidth': 18.0.w,
+      'iconHeight': 20.0.h
+    },
+    {
+      'icon': 'portfolio_solid.svg',
+      'label': 'Portfolio',
+      'index': 1,
+      'iconWidth': 24.0.w,
+      'iconHeight': 24.0.h
+    },
+    {
+      'icon': 'input_solid.svg',
+      'label': 'Input',
+      'index': 2,
+      'iconWidth': 20.5.w,
+      'iconHeight': 20.0.h
+    },
+    {
+      'icon': 'profile_solid.svg',
+      'label': 'Profile',
+      'index': 3,
+      'iconWidth': 16.0.w,
+      'iconHeight': 16.0.h
+    },
   ];
 
   void _onItemTapped(int index) {
@@ -45,18 +65,15 @@ class _MainShellState extends State<MainShell> {
     const Color inactiveColor = AppColors.inactiveGrey;
 
     return Scaffold(
-      // Body switches pages based on _selectedIndex
       body: IndexedStack(
         index: _selectedIndex,
         children: _pages,
       ),
-
-      // The persistent 60.h Custom Navigation Bar
       bottomNavigationBar: SafeArea(
         top: false,
         child: Container(
           width: 1.sw,
-          height: 60.h, // Guarantees the 60.h height across all screens
+          height: 60.h,
           decoration: BoxDecoration(
             color: Colors.white,
             borderRadius: BorderRadius.only(
@@ -73,7 +90,6 @@ class _MainShellState extends State<MainShell> {
             ],
           ),
           clipBehavior: Clip.antiAlias,
-          // Custom Row replaces BottomNavigationBar to avoid padding issues
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: _navItems.map((item) {
@@ -81,6 +97,8 @@ class _MainShellState extends State<MainShell> {
                 item['icon'],
                 item['label'],
                 item['index'],
+                item['iconWidth'],
+                item['iconHeight'],
                 activeColor,
                 inactiveColor,
               );
@@ -91,11 +109,12 @@ class _MainShellState extends State<MainShell> {
     );
   }
 
-  // Builds the custom clickable item (InkWell structure)
   Widget _buildCustomNavItem(
       String iconName,
       String label,
       int index,
+      double iconWidth,
+      double iconHeight,
       Color activeColor,
       Color inactiveColor,
       ) {
@@ -105,44 +124,39 @@ class _MainShellState extends State<MainShell> {
       child: InkWell(
         onTap: () => _onItemTapped(index),
         child: SizedBox(
-          height: 60.h, // Forces item height to match container height
+          height: 60.h,
           child: Column(
             mainAxisSize: MainAxisSize.min,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              // Indicator line (2.h)
               AnimatedContainer(
                 duration: const Duration(milliseconds: 200),
                 height: 2.h,
-                width: 20.w,
+                width: 24.w,
                 decoration: BoxDecoration(
                   color: isActive ? activeColor : Colors.transparent,
-                  borderRadius: BorderRadius.circular(2.r),
+                  borderRadius: BorderRadius.circular(1.r),
                 ),
               ),
-              SizedBox(height: 1.h), // Space (1.h)
-              // Icon (20.h)
+              SizedBox(height: 3.h),
               SvgPicture.asset(
                 'assets/icons/$iconName',
                 colorFilter: ColorFilter.mode(
                   isActive ? activeColor : inactiveColor,
                   BlendMode.srcIn,
                 ),
-                width: 20.w,
-                height: 20.h,
+                width: iconWidth,
+                height: iconHeight,
               ),
-              SizedBox(height: 1.h), // Space (1.h)
-              // Text (10.sp height)
+              SizedBox(height: 4.h),
               Text(
                 label,
                 style: TextStyle(
                   fontSize: 10.sp,
-                  fontWeight: FontWeight.w500,
+                  fontWeight: isActive ? FontWeight.w600 : FontWeight.w500,
                   color: isActive ? activeColor : inactiveColor,
                 ),
               ),
-              // Final vertical padding to center content
-              SizedBox(height: 2.h),
             ],
           ),
         ),

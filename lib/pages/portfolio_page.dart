@@ -1,11 +1,9 @@
-// portfolio_page.dart
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:yolliday_app/main.dart';
 import 'package:yolliday_app/widgets/portfolio_card.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-// (PortfolioCardData class remains unchanged)
 class PortfolioCardData {
   final String id;
   final String title;
@@ -23,9 +21,6 @@ class PortfolioCardData {
 }
 
 class PortfolioPage extends StatefulWidget {
-  // ❌ REMOVED: final ValueChanged<int>? onNavigationTap; (No longer needed)
-
-  // Constructor is simplified
   const PortfolioPage({super.key});
 
   @override
@@ -36,8 +31,6 @@ class _PortfolioPageState extends State<PortfolioPage>
     with SingleTickerProviderStateMixin {
   late final TabController _tabController;
   final TextEditingController _searchController = TextEditingController();
-
-  // ❌ REMOVED: int _localSelectedIndex = 1;
 
   final List<PortfolioCardData> _allCards = [
     PortfolioCardData(
@@ -79,8 +72,6 @@ class _PortfolioPageState extends State<PortfolioPage>
 
   List<PortfolioCardData> _filteredCards = [];
 
-  // ❌ REMOVED: Helper data for the navigation bar items
-
   @override
   void initState() {
     super.initState();
@@ -98,8 +89,6 @@ class _PortfolioPageState extends State<PortfolioPage>
     });
   }
 
-  // ❌ REMOVED: void _onItemTapped(int index)
-
   @override
   void dispose() {
     _tabController.dispose();
@@ -113,13 +102,21 @@ class _PortfolioPageState extends State<PortfolioPage>
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Portfolio'),
+        title: Text(
+          'Portfolio',
+          style: TextStyle(
+            fontFamily: 'Roboto',
+            fontSize: 18.sp,
+            fontWeight: FontWeight.w500,
+            color: Color(0xFF303030),
+          ),
+        ),
         actions: [
           IconButton(
             icon: SvgPicture.asset(
               'assets/icons/shopping_bag.svg',
-              width: 24.w,
-              height: 24.h,
+              width: 16.w,
+              height: 20.h,
               colorFilter:
               ColorFilter.mode(AppColors.primaryOrange2, BlendMode.srcIn),
             ),
@@ -128,8 +125,8 @@ class _PortfolioPageState extends State<PortfolioPage>
           IconButton(
             icon: SvgPicture.asset(
               'assets/icons/bell.svg',
-              width: 24.w,
-              height: 24.h,
+              width: 16.w,
+              height: 19.5.h,
               colorFilter:
               ColorFilter.mode(AppColors.primaryOrange2, BlendMode.srcIn),
             ),
@@ -195,11 +192,8 @@ class _PortfolioPageState extends State<PortfolioPage>
               ],
             ),
           ),
-
-          // Floating Filter Button (above bottom nav)
           Positioned(
-            // Positioned at 70.h (60.h nav bar + 10.h margin)
-            bottom: 70.h,
+            bottom: 35.h,
             left: 0,
             right: 0,
             child: Center(
@@ -208,6 +202,8 @@ class _PortfolioPageState extends State<PortfolioPage>
                 shadowColor: AppColors.primaryOrange2.withOpacity(0.4),
                 borderRadius: BorderRadius.circular(24.r),
                 child: Container(
+                  width: 104.w,
+                  height: 34.h,
                   decoration: BoxDecoration(
                     color: AppColors.primaryOrange2,
                     borderRadius: BorderRadius.circular(24.r),
@@ -215,10 +211,7 @@ class _PortfolioPageState extends State<PortfolioPage>
                   child: TextButton.icon(
                     onPressed: () {},
                     style: TextButton.styleFrom(
-                      padding: EdgeInsets.symmetric(
-                        horizontal: 24.w,
-                        vertical: 12.h,
-                      ),
+                      foregroundColor: Colors.white,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(24.r),
                       ),
@@ -227,7 +220,6 @@ class _PortfolioPageState extends State<PortfolioPage>
                     label: Text(
                       'Filter',
                       style: TextStyle(
-                        color: Colors.white,
                         fontSize: 16.sp,
                         fontWeight: FontWeight.w600,
                       ),
@@ -239,12 +231,8 @@ class _PortfolioPageState extends State<PortfolioPage>
           ),
         ],
       ),
-
-      // ❌ REMOVED: bottomNavigationBar is now in MainShell
     );
   }
-
-  // ❌ REMOVED: _buildCustomNavItem function
 
   Widget _buildSearchBar() {
     return Center(
@@ -257,7 +245,7 @@ class _PortfolioPageState extends State<PortfolioPage>
             hintText: 'Search a project',
             hintStyle: TextStyle(color: AppColors.textGrey, fontSize: 16.sp),
             filled: true,
-            fillColor: AppColors.backgroundWhite,
+            fillColor: AppColors.lightGreyBackground,
             contentPadding:
             EdgeInsets.symmetric(vertical: 12.h, horizontal: 16.w),
             enabledBorder: OutlineInputBorder(
@@ -304,7 +292,7 @@ class _PortfolioPageState extends State<PortfolioPage>
 
   Widget _buildCardList() {
     return ListView.builder(
-      padding: EdgeInsets.fromLTRB(16.w, 8.h, 16.w, 70.h),
+      padding: EdgeInsets.fromLTRB(16.w, 8.h, 16.w, 80.h),
       itemCount: _filteredCards.length,
       itemBuilder: (context, index) {
         final card = _filteredCards[index];

@@ -1,4 +1,3 @@
-//portfolio_card.dart
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:yolliday_app/main.dart';
@@ -31,9 +30,9 @@ class PortfolioCard extends StatelessWidget {
         ),
         boxShadow: [
           BoxShadow(
-            color: Colors.grey.withOpacity(0.15),
-            spreadRadius: 2,
-            blurRadius: 8,
+            color: Colors.black.withOpacity(0.08),
+            spreadRadius: 1,
+            blurRadius: 10,
             offset: const Offset(0, 4),
           ),
         ],
@@ -42,7 +41,7 @@ class PortfolioCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           ClipRRect(
-            borderRadius: BorderRadius.horizontal(left: Radius.circular(12.r)),
+            borderRadius: BorderRadius.horizontal(left: Radius.circular(10.r)),
             child: Image.asset(
               imageUrl,
               height: 110.h,
@@ -73,9 +72,10 @@ class PortfolioCard extends StatelessWidget {
                   Text(
                     title,
                     style: TextStyle(
-                      fontSize: 16.sp,
-                      fontWeight: FontWeight.bold,
-                      color: AppColors.textBlack,
+                      fontSize: 14.sp,
+                      fontWeight: FontWeight.w500,
+                      color: const Color(0xFF303030),
+                      height: 18 / 14,
                     ),
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
@@ -91,17 +91,18 @@ class PortfolioCard extends StatelessWidget {
                             Text(
                               category,
                               style: TextStyle(
-                                fontSize: 12.sp,
-                                fontWeight: FontWeight.w500,
-                                color: AppColors.textGrey,
+                                fontSize: 10.sp,
+                                fontWeight: FontWeight.w400,
+                                color: const Color(0xFF303030),
                               ),
                             ),
                             SizedBox(height: 4.h),
                             Text(
                               author,
                               style: TextStyle(
-                                fontSize: 12.sp,
-                                color: AppColors.textGrey,
+                                fontSize: 10.sp,
+                                fontWeight: FontWeight.w400,
+                                color: const Color(0xFF9E95A2),
                               ),
                             ),
                           ],
@@ -119,8 +120,8 @@ class PortfolioCard extends StatelessWidget {
                                 Color(0xFFF39519),
                                 Color(0xFFFFCD67),
                               ],
-                              begin: Alignment.bottomRight,
-                              end: Alignment.topLeft,
+                              begin: Alignment.topLeft,
+                              end: Alignment.bottomRight,
                             ),
                             borderRadius: BorderRadius.circular(5.r),
                           ),
